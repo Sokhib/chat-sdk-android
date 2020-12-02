@@ -16,13 +16,12 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import sdk.chat.core.interfaces.UserListItem;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.Dimen;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
 import sdk.chat.ui.adapters.UsersListAdapter;
 import sdk.chat.ui.binders.AvailabilityHelper;
-import sdk.chat.ui.binders.OnlineStatusBinder;
 import sdk.chat.ui.module.UIModule;
 
 public class UserViewHolder extends RecyclerView.ViewHolder  {
@@ -61,7 +60,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder  {
             checkbox.setVisibility(View.INVISIBLE);
         }
 
-        if (StringChecker.isNullOrEmpty(item.getAvailability()) || multiSelectEnabled) {
+        if (Checker.isNullOrEmpty(item.getAvailability()) || multiSelectEnabled) {
             availabilityImageView.setVisibility(View.INVISIBLE);
         } else {
             availabilityImageView.setVisibility(View.VISIBLE);
@@ -82,7 +81,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder  {
         int height = Dimen.from(context, R.dimen.small_avatar_height);
 
         String avatarURL = item.getAvatarURL();
-        if (!StringChecker.isNullOrEmpty(avatarURL)) {
+        if (!Checker.isNullOrEmpty(avatarURL)) {
             Glide.with(root)
                     .load(item.getAvatarURL())
                     .dontAnimate()

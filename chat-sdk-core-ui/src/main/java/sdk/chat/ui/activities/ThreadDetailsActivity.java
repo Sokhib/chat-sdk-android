@@ -33,8 +33,8 @@ import sdk.chat.core.events.EventType;
 import sdk.chat.core.events.NetworkEvent;
 import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.Dimen;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.core.utils.Strings;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
@@ -112,7 +112,7 @@ public class ThreadDetailsActivity extends ImagePreviewActivity {
         }
         nameTextView.setText(name);
 
-        if (!StringChecker.isNullOrEmpty(thread.getImageUrl())) {
+        if (!Checker.isNullOrEmpty(thread.getImageUrl())) {
             threadImageView.setOnClickListener(v -> zoomImageFromThumbnail(threadImageView, thread.getImageUrl()));
             Glide.with(this).load(thread.getImageUrl()).dontAnimate().into(threadImageView);
         } else {

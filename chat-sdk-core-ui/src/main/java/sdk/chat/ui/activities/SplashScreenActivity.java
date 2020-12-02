@@ -9,31 +9,36 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import butterknife.BindView;
 import sdk.chat.core.session.ChatSDK;
-import sdk.chat.core.utils.StringChecker;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.ui.R;
-import sdk.chat.ui.R2;
+import sdk.chat.ui.databinding.ActivitySplashScreenBinding;
 import sdk.guru.common.RX;
 
 public class SplashScreenActivity extends BaseActivity {
 
     public static int AUTH = 1;
-
-    @BindView(R2.id.imageView) protected ImageView imageView;
-    @BindView(R2.id.progressBar) protected ProgressBar progressBar;
-    @BindView(R2.id.root) protected ConstraintLayout root;
+    protected ImageView imageView;
+    protected ProgressBar progressBar;
+    protected ConstraintLayout root;
+    ActivitySplashScreenBinding splashScreenBinding;
 
     @Override
-    protected @LayoutRes int getLayout() {
+    protected @LayoutRes
+    int getLayout() {
         return R.layout.activity_splash_screen;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        splashScreenBinding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
+        imageView = splashScreenBinding.imageView;
+        progressBar = splashScreenBinding.progressBar;
+        root = splashScreenBinding.root;
+        setContentView(splashScreenBinding.getRoot());
 
-        imageView.setImageResource(ChatSDK.config().logoDrawableResourceID);
+        imageView.setImageResource(ChatSDK.config().splashImage);
 
         stopProgressBar();
 
@@ -67,7 +72,7 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     protected void startMainActivity() {
-        if (StringChecker.isNullOrEmpty(ChatSDK.currentUser().getName())) {
+        if (Checker.isNullOrEmpty(ChatSDK.currentUser().getName())) {
             ChatSDK.ui().startPostRegistrationActivity(this, extras);
         } else {
             ChatSDK.ui().startMainActivity(this, extras);

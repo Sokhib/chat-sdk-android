@@ -9,7 +9,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import sdk.chat.core.dao.User;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.types.ConnectionType;
-import sdk.chat.core.utils.StringChecker;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.ui.utils.ToastHelper;
 
 public class ScanQRCodeActivity extends Activity implements ZXingScannerView.ResultHandler {
@@ -38,7 +38,7 @@ public class ScanQRCodeActivity extends Activity implements ZXingScannerView.Res
 
     @Override
     public void handleResult(Result rawResult) {
-        if (!StringChecker.isNullOrEmpty(rawResult.getText())) {
+        if (!Checker.isNullOrEmpty(rawResult.getText())) {
             User user = ChatSDK.db().fetchOrCreateEntityWithEntityID(User.class, rawResult.getText());
             ChatSDK.contact().addContact(user, ConnectionType.Contact).doOnComplete(() -> {
                 ToastHelper.show(this, R.string.contact_added);

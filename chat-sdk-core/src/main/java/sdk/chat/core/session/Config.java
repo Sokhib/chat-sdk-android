@@ -95,6 +95,8 @@ public class Config<T> extends BaseConfig<T> {
 
     public int logoDrawableResourceID = R.drawable.ic_launcher_big;
 
+    public int splashImage = R.drawable.twitch_profile;
+
     public HashMap<String, Object> customProperties = new HashMap<>();
 
     public boolean disablePresence = false;

@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,16 +26,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.pmw.tinylog.Logger;
 
-import butterknife.BindView;
 import io.reactivex.Completable;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.types.AccountDetails;
-import sdk.chat.core.utils.StringChecker;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.ui.R;
-import sdk.chat.ui.R2;
+import sdk.chat.ui.databinding.ActivityLoginBinding;
 import sdk.chat.ui.module.UIModule;
 import sdk.guru.common.RX;
 
@@ -44,35 +45,36 @@ import sdk.guru.common.RX;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    protected ImageView appIconImageView;
     protected boolean exitOnBackPressed = false;
     protected boolean authenticating = false;
-
-    @BindView(R2.id.appIconImageView) protected ImageView appIconImageView;
-    @BindView(R2.id.usernameTextInput) protected TextInputEditText usernameTextInput;
-    @BindView(R2.id.usernameTextInputLayout) protected TextInputLayout usernameTextInputLayout;
-    @BindView(R2.id.passwordTextInput) protected TextInputEditText passwordTextInput;
-    @BindView(R2.id.passwordTextInputLayout) protected TextInputLayout passwordTextInputLayout;
-    @BindView(R2.id.loginButton) protected MaterialButton loginButton;
-    @BindView(R2.id.registerButton) protected MaterialButton registerButton;
-    @BindView(R2.id.anonymousButton) protected MaterialButton anonymousButton;
-    @BindView(R2.id.resetPasswordButton) protected MaterialButton resetPasswordButton;
-    @BindView(R2.id.root) protected ConstraintLayout root;
+    protected TextInputEditText usernameTextInput;
+    protected TextInputLayout usernameTextInputLayout;
+    protected TextInputEditText passwordTextInput;
+    protected TextInputLayout passwordTextInputLayout;
+    protected MaterialButton loginButton;
+    protected MaterialTextView registerTextView;
+    protected MaterialTextView resetPasswordTextView;
+    protected ConstraintLayout root;
+    private ActivityLoginBinding loginBinding;
 
     @Override
-    protected @LayoutRes int getLayout() {
+    protected @LayoutRes
+    int getLayout() {
         return R.layout.activity_login;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(loginBinding.getRoot());
         initViews();
 
-        setExitOnBackPressed(true);
+        Log.d("TAG", "onCreate: Login Working");
+        setExitOnBackPressed();
 
         setupTouchUIToDismissKeyboard(root);
-
-        initViews();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -82,18 +84,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     protected void initViews() {
         super.initViews();
-
-        resetPasswordButton.setVisibility(UIModule.config().resetPasswordEnabled ? View.VISIBLE : View.INVISIBLE);
-
-        if (!ChatSDK.auth().accountTypeEnabled(AccountDetails.Type.Anonymous)) {
-            anonymousButton.setVisibility(View.GONE);
-        }
+        appIconImageView = loginBinding.appIconImageView;
+        usernameTextInput = loginBinding.usernameTextInput;
+        usernameTextInputLayout = loginBinding.usernameTextInputLayout;
+        passwordTextInput = loginBinding.passwordTextInput;
+        passwordTextInputLayout = loginBinding.passwordTextInputLayout;
+        loginButton = loginBinding.loginButton;
+        registerTextView = loginBinding.registerTextView;
+        resetPasswordTextView = loginBinding.resetPasswordTextview;
+        root = loginBinding.root;
+        resetPasswordTextView.setVisibility(UIModule.config().resetPasswordEnabled ? View.VISIBLE : View.INVISIBLE);
 
         // Set the debug username and password details for testing
-        if (!StringChecker.isNullOrEmpty(ChatSDK.config().debugUsername)) {
+        if (!Checker.isNullOrEmpty(ChatSDK.config().debugUsername)) {
             usernameTextInput.setText(ChatSDK.config().debugUsername);
         }
-        if (!StringChecker.isNullOrEmpty(ChatSDK.config().debugPassword)) {
+        if (!Checker.isNullOrEmpty(ChatSDK.config().debugPassword)) {
             passwordTextInput.setText(ChatSDK.config().debugPassword);
         }
 
@@ -101,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             usernameTextInputLayout.setHint(UIModule.config().usernameHint);
         }
 
-        appIconImageView.setImageResource(ChatSDK.config().logoDrawableResourceID);
+//        appIconImageView.setImageResource(ChatSDK.config().logoDrawableResourceID);
 
     }
 
@@ -113,9 +119,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initListeners() {
 
         loginButton.setOnClickListener(this);
-        registerButton.setOnClickListener(this);
-        anonymousButton.setOnClickListener(this);
-        resetPasswordButton.setOnClickListener(this);
+        registerTextView.setOnClickListener(this);
+        resetPasswordTextView.setOnClickListener(this);
 
     }
 
@@ -135,11 +140,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         if (i == R.id.loginButton) {
             passwordLogin();
-        } else if (i == R.id.anonymousButton) {
-            anonymousLogin();
-        } else if (i == R.id.registerButton) {
+        } else if (i == R.id.registerTextView) {
             register();
-        } else if (i == R.id.resetPasswordButton) {
+        } else if (i == R.id.resetPasswordTextview) {
             showForgotPasswordDialog();
         }
     }
@@ -149,9 +152,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onResume();
 
         loginButton.setEnabled(true);
-        registerButton.setEnabled(true);
-        anonymousButton.setEnabled(true);
-        resetPasswordButton.setEnabled(true);
+        registerTextView.setEnabled(true);
+        resetPasswordTextView.setEnabled(true);
 
         initListeners();
     }
@@ -160,7 +162,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void afterLogin() {
         // We pass the extras in case this activity was launched by a push. In that case
         // we can load up the thread the text belongs to
-//        ChatSDK.ui().startMainActivity(this, extras);
+        ChatSDK.ui().startMainActivity(this, extras);
         finish();
     }
 
@@ -207,26 +209,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     public void register() {
+        ChatSDK.ui().startPostRegistrationActivity(this, extras);
 
-        if (!checkFields()) {
-            dismissProgressDialog();
-            return;
-        }
-
-        AccountDetails details = new AccountDetails();
-        details.type = AccountDetails.Type.Register;
-        details.username = usernameTextInput.getText().toString();
-        details.password = passwordTextInput.getText().toString();
-
-        authenticateWithDetails(details);
-
-    }
-
-    public void anonymousLogin() {
-
-        AccountDetails details = new AccountDetails();
-        details.type = AccountDetails.Type.Anonymous;
-        authenticateWithDetails(details);
     }
 
     /* Exit Stuff*/
@@ -310,8 +294,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    protected void setExitOnBackPressed(boolean exitOnBackPressed) {
-        this.exitOnBackPressed = exitOnBackPressed;
+    protected void setExitOnBackPressed() {
+        this.exitOnBackPressed = true;
     }
 
 

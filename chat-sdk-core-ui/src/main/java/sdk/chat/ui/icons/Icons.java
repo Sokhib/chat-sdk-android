@@ -25,18 +25,27 @@ public class Icons {
         return instance;
     }
 
-    public @ColorRes int actionBarIconColor = R.color.app_bar_icon_color;
-    public @ColorRes int chatOptionIconColor = R.color.white;
-    public @ColorRes int tabIconColor = R.color.tab_icon_color;
+    public @ColorRes
+    int actionBarIconColor = R.color.app_bar_icon_color;
+    public @ColorRes
+    int chatOptionIconColor = R.color.white;
+    public @ColorRes
+    int tabIconColor = R.color.tab_icon_color;
+    public IconicsDrawable password;
+
+    public IconicsDrawable dummy;
+    public IconicsDrawable location;
+    public IconicsDrawable user;
+    public IconicsDrawable phone;
 
     public void initialize(Context context) {
 
         // First icon doesn't load for some reason 🤷
         dummy = new IconicsDrawable(context, FontAwesome.Icon.faw_dumbbell);
-
         user = new IconicsDrawable(context, FontAwesome.Icon.faw_user);
         location = new IconicsDrawable(context, GoogleMaterial.Icon.gmd_my_location);
         phone = new IconicsDrawable(context, FontAwesome.Icon.faw_phone);
+        password = new IconicsDrawable(context, FontAwesome.Icon.faw_lock);
         email = new IconicsDrawable(context, FontAwesome.Icon.faw_envelope);
         chat = new IconicsDrawable(context, FontAwesome.Icon.faw_comment);
         check = new IconicsDrawable(context, GoogleMaterial.Icon.gmd_check);
@@ -61,11 +70,6 @@ public class Icons {
         options = new IconicsDrawable(context, FontAwesome.Icon.faw_ellipsis_h);
 
     }
-
-    public IconicsDrawable dummy;
-    public IconicsDrawable location;
-    public IconicsDrawable user;
-    public IconicsDrawable phone;
     public IconicsDrawable email;
     public IconicsDrawable chat;
     public IconicsDrawable check;

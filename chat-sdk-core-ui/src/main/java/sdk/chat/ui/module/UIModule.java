@@ -8,21 +8,18 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import sdk.chat.core.dao.Message;
 import sdk.chat.core.interfaces.InterfaceAdapter;
 import sdk.chat.core.module.AbstractModule;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.session.Configure;
 import sdk.chat.core.session.InterfaceAdapterProvider;
-import sdk.chat.core.utils.StringChecker;
-import sdk.chat.ui.binders.AvailabilityHelper;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.ui.binders.IconBinder;
 import sdk.chat.ui.binders.MessageBinder;
 import sdk.chat.ui.binders.NameBinder;
 import sdk.chat.ui.binders.OnlineStatusBinder;
 import sdk.chat.ui.binders.ReadStatusViewBinder;
 import sdk.chat.ui.binders.ReplyViewBinder;
-import sdk.chat.ui.views.ReplyView;
 
 public class UIModule extends AbstractModule implements InterfaceAdapterProvider {
 
@@ -56,7 +53,7 @@ public class UIModule extends AbstractModule implements InterfaceAdapterProvider
 
     @Override
     public void activate(@Nullable Context context) {
-        if (StringChecker.isNullOrEmpty(ChatSDK.config().googleMapsApiKey)) {
+        if (Checker.isNullOrEmpty(ChatSDK.config().googleMapsApiKey)) {
             config.locationMessagesEnabled = false;
         }
     }

@@ -33,8 +33,8 @@ import sdk.chat.core.events.EventType;
 import sdk.chat.core.events.NetworkEvent;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.types.ConnectionType;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.ProfileOption;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
 import sdk.chat.ui.binders.AvailabilityHelper;
@@ -267,7 +267,7 @@ public class ProfileFragment extends BaseFragment {
         collapsingToolbar.setTitle(user.getName());
         Glide.with(this).load(user.getAvatarURL()).dontAnimate().placeholder(UIModule.config().defaultProfilePlaceholder).into(avatarImageView);
 
-        if (StringChecker.isNullOrEmpty(user.getStatus())) {
+        if (Checker.isNullOrEmpty(user.getStatus())) {
             statusCardView.setVisibility(View.GONE);
             topSpace.setVisibility(View.VISIBLE);
         } else {
@@ -281,19 +281,19 @@ public class ProfileFragment extends BaseFragment {
         availabilityLinearLayout.removeAllViews();
         buttonsLinearLayout.removeAllViews();
 
-        if (!StringChecker.isNullOrEmpty(user.getLocation())) {
+        if (!Checker.isNullOrEmpty(user.getLocation())) {
             iconLinearLayout.addView(IconItemView.create(getContext(), user.getLocation(), Icons.get(getContext(), Icons.choose().location, R.color.profile_icon_color)));
         }
-        if (!StringChecker.isNullOrEmpty(user.getPhoneNumber())) {
+        if (!Checker.isNullOrEmpty(user.getPhoneNumber())) {
             iconLinearLayout.addView(IconItemView.create(getContext(), user.getPhoneNumber(), Icons.get(getContext(), Icons.choose().phone, R.color.profile_icon_color)));
         }
-        if (!StringChecker.isNullOrEmpty(user.getEmail())) {
+        if (!Checker.isNullOrEmpty(user.getEmail())) {
             iconLinearLayout.addView(IconItemView.create(getContext(), user.getEmail(), Icons.get(getContext(), Icons.choose().email, R.color.profile_icon_color)));
         }
 
         String availability = getUser().getAvailability();
 
-        if (!StringChecker.isNullOrEmpty(availability)) {
+        if (!Checker.isNullOrEmpty(availability)) {
             availabilityCardView.setVisibility(View.VISIBLE);
             availabilityLinearLayout.addView(IconItemView.create(
                     getContext(),

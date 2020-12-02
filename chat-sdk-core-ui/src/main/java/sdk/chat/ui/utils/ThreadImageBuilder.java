@@ -27,8 +27,8 @@ import sdk.chat.core.image.ImageUtils;
 import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.storage.FileManager;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.Dimen;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.icons.Icons;
 import sdk.guru.common.RX;
@@ -56,7 +56,7 @@ public class ThreadImageBuilder {
     public static Single<Uri> getImageUriForThread(Context context, final Thread thread, int size) {
         return Single.defer((Callable<SingleSource<Uri>>) () -> {
 
-            if(!StringChecker.isNullOrEmpty(thread.getImageUrl())) {
+            if (!Checker.isNullOrEmpty(thread.getImageUrl())) {
                 return Single.just(Uri.parse(thread.getImageUrl()));
             }
 

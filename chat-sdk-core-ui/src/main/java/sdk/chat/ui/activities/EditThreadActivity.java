@@ -35,7 +35,7 @@ import sdk.chat.core.dao.User;
 import sdk.chat.core.image.ImageUtils;
 import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.session.ChatSDK;
-import sdk.chat.core.utils.StringChecker;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
 import sdk.chat.ui.chat.MediaSelector;
@@ -143,7 +143,7 @@ public class EditThreadActivity extends BaseActivity {
     }
 
     protected void updateSaveButtonState() {
-        if (!StringChecker.isNullOrEmpty(nameTextInput.getText())) {
+        if (!Checker.isNullOrEmpty(nameTextInput.getText())) {
             fab.show();
         } else {
             fab.hide();

@@ -34,8 +34,8 @@ import sdk.chat.core.dao.User;
 import sdk.chat.core.events.EventType;
 import sdk.chat.core.events.NetworkEvent;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.Dimen;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
 import sdk.chat.ui.binders.AvailabilityHelper;
@@ -249,7 +249,7 @@ public class EditProfileActivity extends BaseActivity {
 
         String name = nameEditView.getText();
 
-        if (StringChecker.isNullOrEmpty(name)) {
+        if (Checker.isNullOrEmpty(name)) {
             showToast(R.string.name_field_must_be_set);
             return;
         }

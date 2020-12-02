@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Completable;
 import sdk.chat.core.dao.Message;
 import sdk.chat.core.dao.User;
 import sdk.chat.core.handlers.PushHandler;
 import sdk.chat.core.hook.Hook;
 import sdk.chat.core.hook.HookEvent;
 import sdk.chat.core.session.ChatSDK;
-import sdk.chat.core.utils.StringChecker;
-import io.reactivex.Completable;
+import sdk.chat.core.utils.Checker;
 
 public abstract class AbstractPushHandler implements PushHandler {
 
@@ -93,8 +93,8 @@ public abstract class AbstractPushHandler implements PushHandler {
             String userName = user.getName();
             String userEntityID = user.getPushChannel();
 
-            if (!user.isMe() && !StringChecker.isNullOrEmpty(userEntityID) && !StringChecker.isNullOrEmpty(userName)) {
-                if(!user.getIsOnline() || !ChatSDK.config().onlySendPushToOfflineUsers) {
+            if (!user.isMe() && !Checker.isNullOrEmpty(userEntityID) && !Checker.isNullOrEmpty(userName)) {
+                if (!user.getIsOnline() || !ChatSDK.config().onlySendPushToOfflineUsers) {
                     users.put(userEntityID, userName);
                 }
             }
@@ -112,7 +112,7 @@ public abstract class AbstractPushHandler implements PushHandler {
         data.put(SenderId, message.getSender().getEntityID());
         data.put(ThreadId, message.getThread().getEntityID());
         data.put(Action, ChatSDK.config().pushNotificationAction != null ? ChatSDK.config().pushNotificationAction : QuickReplyNotificationCategory);
-        if(!StringChecker.isNullOrEmpty(ChatSDK.config().pushNotificationSound)) {
+        if (!Checker.isNullOrEmpty(ChatSDK.config().pushNotificationSound)) {
             data.put(Sound, ChatSDK.config().pushNotificationSound);
         }
 

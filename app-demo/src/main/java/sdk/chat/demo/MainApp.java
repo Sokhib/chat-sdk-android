@@ -6,8 +6,6 @@ import org.pmw.tinylog.Logger;
 
 import sdk.chat.app.firebase.ChatSDKFirebase;
 import sdk.chat.core.session.ChatSDK;
-import sdk.chat.firebase.receipts.FirebaseReadReceiptsModule;
-import sdk.chat.message.audio.AudioMessageModule;
 
 public class MainApp extends Application {
 
@@ -18,10 +16,7 @@ public class MainApp extends Application {
         try {
 
             // Setup Chat SDK
-            ChatSDKFirebase.quickStart(this, "pre_1", "your_key_here", true,
-                    AudioMessageModule.shared(),
-                    FirebaseReadReceiptsModule.shared()
-            );
+            ChatSDKFirebase.quickStart(this, "pre_1", "your_key_here", true);
 
             ChatSDK.events().sourceOnMain().subscribe(event -> {
                 Logger.debug(event);

@@ -38,6 +38,7 @@ android {
         checkReleaseBuilds false
         lintConfig file('lint.xml')
     }
+    viewBinding.enabled = true
 }
 
 ext {
@@ -62,7 +63,7 @@ rootProject.allprojects {
     repositories {
         maven { url "https://jitpack.io" }
         maven { url "http://dl.bintray.com/chat-sdk/chatkit" }
-        maven { url "http://dl.bintray.com/chat-sdk/matisse"}
+        maven { url "http://dl.bintray.com/chat-sdk/matisse" }
     }
 }
 

@@ -3,9 +3,9 @@ package sdk.chat.firebase.adapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ServerValue;
 
-import sdk.chat.core.utils.StringChecker;
-import sdk.chat.firebase.adapter.module.FirebaseModule;
 import io.reactivex.Completable;
+import sdk.chat.core.utils.Checker;
+import sdk.chat.firebase.adapter.module.FirebaseModule;
 import sdk.guru.common.RX;
 
 /**
@@ -38,7 +38,7 @@ public class FirebaseEntity {
         return Completable.create(e -> {
             if (FirebaseModule.config().enableWebCompatibility) {
 
-                if(StringChecker.isNullOrEmpty(path) || StringChecker.isNullOrEmpty(entityID) || StringChecker.isNullOrEmpty(key)) {
+                if (Checker.isNullOrEmpty(path) || Checker.isNullOrEmpty(entityID) || Checker.isNullOrEmpty(key)) {
                     e.onComplete();
                     return;
                 }

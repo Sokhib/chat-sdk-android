@@ -51,8 +51,8 @@ import sdk.chat.core.module.Module;
 import sdk.chat.core.notifications.NotificationDisplayHandler;
 import sdk.chat.core.storage.FileManager;
 import sdk.chat.core.utils.AppBackgroundMonitor;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.KeyStorage;
-import sdk.chat.core.utils.StringChecker;
 import sdk.guru.common.RX;
 
 
@@ -400,14 +400,14 @@ public class ChatSDK {
 
     public static String getMessageImageURL(Message message) {
         String imageURL = message.getImageURL();
-        if(StringChecker.isNullOrEmpty(imageURL)) {
+        if (Checker.isNullOrEmpty(imageURL)) {
             imageURL = ChatSDK.imageMessage().getImageURL(message);
         }
-        if(StringChecker.isNullOrEmpty(imageURL)) {
+        if (Checker.isNullOrEmpty(imageURL)) {
             imageURL = ChatSDK.locationMessage().getImageURL(message);
         }
-        if(StringChecker.isNullOrEmpty(imageURL)) {
-           for (Module module: shared().builder.modules) {
+        if (Checker.isNullOrEmpty(imageURL)) {
+            for (Module module : shared().builder.modules) {
                 if (module.getMessageHandler() != null) {
                     imageURL = module.getMessageHandler().getImageURL(message);
                     if (imageURL != null) {
@@ -421,17 +421,17 @@ public class ChatSDK {
 
     public static String getMessageText(Message message) {
         String text = message.isReply() ? message.getReply() : message.getText();
-        if(StringChecker.isNullOrEmpty(text)) {
+        if (Checker.isNullOrEmpty(text)) {
             text = ChatSDK.imageMessage().toString(message);
         }
-        if(StringChecker.isNullOrEmpty(text)) {
+        if (Checker.isNullOrEmpty(text)) {
             text = ChatSDK.locationMessage().toString(message);
         }
-        if(StringChecker.isNullOrEmpty(text)) {
-            for (Module module: shared().builder.modules) {
+        if (Checker.isNullOrEmpty(text)) {
+            for (Module module : shared().builder.modules) {
                 if (module.getMessageHandler() != null) {
                     text = module.getMessageHandler().toString(message);
-                    if (!StringChecker.isNullOrEmpty(text)) {
+                    if (!Checker.isNullOrEmpty(text)) {
                         break;
                     }
                 }

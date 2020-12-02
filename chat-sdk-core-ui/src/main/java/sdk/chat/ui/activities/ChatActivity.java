@@ -49,8 +49,8 @@ import sdk.chat.core.interfaces.ChatOptionsHandler;
 import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.session.ChatSDK;
 import sdk.chat.core.utils.ActivityResultPushSubjectHolder;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.CurrentLocale;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
 import sdk.chat.ui.appbar.ChatActionBar;
@@ -399,7 +399,7 @@ public class ChatActivity extends BaseActivity implements TextInputDelegate, Cha
             audioBinder.updateRecordMode();
         }
 
-        if (!StringChecker.isNullOrEmpty(thread.getDraft())) {
+        if (!Checker.isNullOrEmpty(thread.getDraft())) {
             input.getInputEditText().setText(thread.getDraft());
         }
 
@@ -418,7 +418,7 @@ public class ChatActivity extends BaseActivity implements TextInputDelegate, Cha
         super.onPause();
         hideKeyboard();
 
-        if (!StringChecker.isNullOrEmpty(input.getInputEditText().getText())) {
+        if (!Checker.isNullOrEmpty(input.getInputEditText().getText())) {
             thread.setDraft(input.getInputEditText().getText().toString());
         } else {
             thread.setDraft(null);

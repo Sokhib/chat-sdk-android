@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
@@ -19,16 +18,47 @@
             android:orientation="vertical"
             android:paddingTop="0dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avatarImageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_margin="20dp"
-                app:civ_border_width="5dp"
-                app:civ_circle_background_color="?avatarBackgroundColor"
-                app:civ_border_color="?avatarBorderColor"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                />
+                android:background="@color/app_primary_dark"
+                android:gravity="center"
+                android:paddingVertical="8dp"
+                android:text="Sign Up"
+                android:textColor="@color/white"
+                android:textSize="36sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/app_primary"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:src="@drawable/icn_18_plus"
+                    app:civ_border_color="?avatarBorderColor"
+                    app:civ_border_width="5dp"
+                    app:civ_circle_background_color="?avatarBackgroundColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="Sign Up \n to get Encryption Sharing on the move"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+
+                    />
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -39,30 +69,35 @@
 
                 <LinearLayout
                     android:id="@+id/iconLinearLayout"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <sdk.chat.ui.views.IconEditView
                         android:id="@+id/nameEditView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <sdk.chat.ui.views.IconEditView
-                        android:id="@+id/locationEditView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <sdk.chat.ui.views.IconEditView
-                        android:id="@+id/phoneEditView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <sdk.chat.ui.views.IconEditView
                         android:id="@+id/emailEditView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress" />
 
+                    <sdk.chat.ui.views.IconEditView
+                        android:id="@+id/phoneEditView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <sdk.chat.ui.views.IconEditView
+                        android:id="@+id/passwordEditView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <sdk.chat.ui.views.IconEditView
+                        android:id="@+id/passwordRepeatEditView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -75,10 +110,9 @@
         android:id="@+id/doneFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        />
+        android:layout_margin="16dp" />
 </RelativeLayout>
 

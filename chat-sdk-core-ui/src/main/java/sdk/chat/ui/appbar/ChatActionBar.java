@@ -24,8 +24,8 @@ import io.reactivex.SingleSource;
 import sdk.chat.core.dao.Thread;
 import sdk.chat.core.interfaces.ThreadType;
 import sdk.chat.core.session.ChatSDK;
+import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.CurrentLocale;
-import sdk.chat.core.utils.StringChecker;
 import sdk.chat.core.utils.Strings;
 import sdk.chat.ui.R;
 import sdk.chat.ui.R2;
@@ -89,7 +89,7 @@ public class ChatActionBar extends AppBarLayout {
     }
 
     public void setSubtitleText(Thread thread, final String text) {
-        if (StringChecker.isNullOrEmpty(text)) {
+        if (Checker.isNullOrEmpty(text)) {
 
             final String defaultText = getContext().getString(R.string.tap_here_for_contact_info);
 
