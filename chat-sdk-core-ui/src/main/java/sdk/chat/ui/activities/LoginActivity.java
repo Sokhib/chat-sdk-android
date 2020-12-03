@@ -14,7 +14,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -70,8 +69,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(loginBinding.getRoot());
         initViews();
-
-        Log.d("TAG", "onCreate: Login Working");
         setExitOnBackPressed();
 
         setupTouchUIToDismissKeyboard(root);
