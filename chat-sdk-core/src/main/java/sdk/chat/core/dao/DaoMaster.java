@@ -23,6 +23,30 @@ public class DaoMaster extends AbstractDaoMaster {
         this(new StandardDatabase(db));
     }
 
+    /** Drops underlying database table using DAOs. */
+    public static void dropAllTables(Database db, boolean ifExists) {
+        UserThreadLinkMetaValueDao.dropTable(db, ifExists);
+        UserDao.dropTable(db, ifExists);
+        ThreadMetaValueDao.dropTable(db, ifExists);
+        ThreadDao.dropTable(db, ifExists);
+        ReadReceiptUserLinkDao.dropTable(db, ifExists);
+        UserMetaValueDao.dropTable(db, ifExists);
+        MessageDao.dropTable(db, ifExists);
+        UserThreadLinkDao.dropTable(db, ifExists);
+        ContactLinkDao.dropTable(db, ifExists);
+        MessageMetaValueDao.dropTable(db, ifExists);
+    }
+
+    /**
+     * WARNING: Drops all table on Upgrade! Use only during development.
+     * Convenience method using a {@link DevOpenHelper}.
+     */
+    public static DaoSession newDevSession(Context context, String name) {
+        Database db = new DevOpenHelper(context, name).getWritableDb();
+        DaoMaster daoMaster = new DaoMaster(db);
+        return daoMaster.newSession();
+    }
+
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(UserThreadLinkMetaValueDao.class);
@@ -51,30 +75,6 @@ public class DaoMaster extends AbstractDaoMaster {
         UserThreadLinkDao.createTable(db, ifNotExists);
         ContactLinkDao.createTable(db, ifNotExists);
         MessageMetaValueDao.createTable(db, ifNotExists);
-    }
-
-    /** Drops underlying database table using DAOs. */
-    public static void dropAllTables(Database db, boolean ifExists) {
-        UserThreadLinkMetaValueDao.dropTable(db, ifExists);
-        UserDao.dropTable(db, ifExists);
-        ThreadMetaValueDao.dropTable(db, ifExists);
-        ThreadDao.dropTable(db, ifExists);
-        ReadReceiptUserLinkDao.dropTable(db, ifExists);
-        UserMetaValueDao.dropTable(db, ifExists);
-        MessageDao.dropTable(db, ifExists);
-        UserThreadLinkDao.dropTable(db, ifExists);
-        ContactLinkDao.dropTable(db, ifExists);
-        MessageMetaValueDao.dropTable(db, ifExists);
-    }
-
-    /**
-     * WARNING: Drops all table on Upgrade! Use only during development.
-     * Convenience method using a {@link DevOpenHelper}.
-     */
-    public static DaoSession newDevSession(Context context, String name) {
-        Database db = new DevOpenHelper(context, name).getWritableDb();
-        DaoMaster daoMaster = new DaoMaster(db);
-        return daoMaster.newSession();
     }
 
     public DaoSession newSession() {

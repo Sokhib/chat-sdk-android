@@ -1,6 +1,7 @@
 package sdk.chat.ui.activities;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -14,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import sdk.chat.core.dao.User;
 import sdk.chat.core.events.NetworkEvent;
@@ -22,9 +25,11 @@ import sdk.chat.core.types.AccountDetails;
 import sdk.chat.core.utils.Checker;
 import sdk.chat.core.utils.Dimen;
 import sdk.chat.ui.R;
+import sdk.chat.ui.chat.MediaSelector;
 import sdk.chat.ui.databinding.ActivityPostRegistrationBinding;
 import sdk.chat.ui.icons.Icons;
 import sdk.chat.ui.module.UIModule;
+import sdk.chat.ui.utils.ImagePickerUploader;
 import sdk.chat.ui.utils.UserImageBuilder;
 import sdk.chat.ui.views.IconEditView;
 import sdk.guru.common.RX;
@@ -77,13 +82,13 @@ public class PostRegistrationActivity extends BaseActivity {
         collapsingToolbarLayout = binding.collapsingToolbar;
         collapsingToolbarLayout.setTitle("Sign Up");
 
-//        avatarImageView.setOnClickListener(view -> { // No Permission after choosing picture
-//            ImagePickerUploader uploader = new ImagePickerUploader(MediaSelector.CropType.Circle);
-//            dm.add(uploader.choosePhoto(this, false).subscribe(results -> {
-//                avatarImageView.setImageURI(Uri.fromFile(new File(results.get(0).uri)));
-//                avatarImageURL = results.get(0).url;
-//            }, this));
-//        });
+        avatarImageView.setOnClickListener(view -> { // No Permission after choosing picture
+            ImagePickerUploader uploader = new ImagePickerUploader(MediaSelector.CropType.Circle);
+            dm.add(uploader.choosePhoto(this, false).subscribe(results -> {
+                avatarImageView.setImageURI(Uri.fromFile(new File(results.get(0).uri)));
+                avatarImageURL = results.get(0).url;
+            }, this));
+        });
 
         doneFab.setImageDrawable(Icons.get(this, Icons.choose().check, Icons.shared().actionBarIconColor));
         doneFab.setOnClickListener(v -> {
